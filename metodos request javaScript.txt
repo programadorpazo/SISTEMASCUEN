@@ -62,13 +62,6 @@ function getParameterByName(name) {
 
 
 
-
-
-
-
-
-
-
 function getXMLHttpRequest() {
     if (window.ActiveXObject) {
         try {
@@ -86,3 +79,49 @@ function getXMLHttpRequest() {
         return null;
     }
 }
+
+public bool submitEmail(string email, string subject, string body, bool isBodyHtml,string ruta,string userName)
+        {
+            try
+            {
+                SmtpClient server = new SmtpClient("cieneguillariberadelrio.com", 587);
+                // Crea el mensaje estableciendo quién lo manda y quién lo recibe
+                //Envía el mensaje.
+                server.Credentials = new System.Net.NetworkCredential("knava@cieneguillariberadelrio.com", "Sistemas1");
+                server.EnableSsl = true;
+                //Añade credenciales si el servidor lo requiere.
+                MailMessage mnsj = new MailMessage();
+                mnsj.Subject = subject;
+                mnsj.IsBodyHtml = true;
+                mnsj.To.Add(new MailAddress(email));
+                mnsj.To.Add(new MailAddress("ofimatica_socios@inresorts.club"));
+                mnsj.From = new MailAddress("knava@cieneguillariberadelrio.com", "Kevin Nava");
+                /* Si deseamos Adjuntar algún archivo*/
+                mnsj.Body = body;
+                
+                Attachment _attachment = new Attachment(ruta + "CON" + userName + ".pdf");
+                mnsj.Attachments.Add(_attachment);
+                Attachment _attachment2 = new Attachment(ruta + "CER" + userName + ".pdf");
+                mnsj.Attachments.Add(_attachment2);
+                Attachment _attachment3 = new Attachment(ruta + "RCI" + userName + ".pdf");
+                mnsj.Attachments.Add(_attachment3);
+                Attachment _attachment4 = new Attachment(ruta + "CRO" + userName + ".pdf");
+                mnsj.Attachments.Add(_attachment4);
+                Attachment _attachment5 = new Attachment(ruta + "PAG" + userName + ".pdf");
+                mnsj.Attachments.Add(_attachment5);
+
+                Attachment _attachment6 = new Attachment(ruta + "PLAN_COMPENSACION_INRESORTS" + ".pdf");
+                mnsj.Attachments.Add(_attachment6);
+                Attachment _attachment7 = new Attachment(ruta + "Plan_beneficios_riberadelrio_inResorts" + ".pdf");
+                mnsj.Attachments.Add(_attachment7);
+                Attachment _attachment8 = new Attachment(ruta + "Reglamento_de_Ética_inResorts" + ".pdf");
+                mnsj.Attachments.Add(_attachment8);
+
+                server.Send(mnsj);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }        
+        }
