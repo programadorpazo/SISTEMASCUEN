@@ -47,3 +47,15 @@ function Send(url, params, callback) {
     //var params = "id=" + encodeURIComponent("");
     sendRequest(url + ".aspx", params, callback, "POST");
 }
+
+
+function ReplaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
